@@ -1,0 +1,876 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paraslis — Nature's Finest Plates</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --o:#F05A0E;--o2:#FF7A35;--o3:#FF9A5C;
+  --b:#080808;--b2:#111111;--b3:#181818;--b4:#222222;
+  --w:#FFFFFF;--w2:rgba(255,255,255,0.6);--w3:rgba(255,255,255,0.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--b);color:var(--w);font-family:'DM Sans',sans-serif;overflow-x:hidden}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--b)}
+::-webkit-scrollbar-thumb{background:var(--o);border-radius:2px}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.2rem 5rem;
+  background:rgba(8,8,8,0.85);
+  backdrop-filter:blur(20px);
+  border-bottom:0.5px solid rgba(255,255,255,0.06);
+}
+.logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:26px;font-weight:700;letter-spacing:2px;
+  color:var(--w);text-decoration:none;
+}
+.logo span{color:var(--o)}
+.logo sub{font-size:10px;letter-spacing:3px;color:var(--w2);display:block;font-family:'DM Sans',sans-serif;font-weight:400;margin-top:-4px}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{color:var(--w2);text-decoration:none;font-size:13px;font-weight:500;letter-spacing:0.8px;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover{color:var(--o)}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.nav-badge{
+  font-size:11px;font-weight:600;color:var(--o);
+  border:0.5px solid rgba(240,90,14,0.4);
+  padding:5px 12px;border-radius:100px;
+  background:rgba(240,90,14,0.08);
+  letter-spacing:0.5px;
+}
+.nav-cta{
+  background:linear-gradient(135deg,var(--o),var(--o2));
+  color:#fff;border:none;padding:10px 26px;
+  border-radius:100px;font-size:13px;font-weight:600;
+  cursor:pointer;transition:all .25s;letter-spacing:0.3px;
+  box-shadow:0 4px 20px rgba(240,90,14,0.3);
+}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(240,90,14,0.45)}
+
+/* HERO */
+.hero{
+  min-height:100vh;display:flex;align-items:center;
+  padding:9rem 5rem 5rem;position:relative;overflow:hidden;
+}
+/* animated gradient bg */
+.hero-glow{
+  position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 50% 60% at 65% 45%, rgba(240,90,14,0.14) 0%, transparent 65%),
+    radial-gradient(ellipse 30% 40% at 80% 20%, rgba(255,122,53,0.07) 0%, transparent 60%);
+}
+/* grain texture */
+.hero::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity:0.4;
+}
+.hero-content{position:relative;z-index:2;max-width:620px}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(240,90,14,0.1);
+  border:0.5px solid rgba(240,90,14,0.35);
+  color:var(--o3);padding:7px 16px;border-radius:100px;
+  font-size:11px;font-weight:600;letter-spacing:2px;
+  text-transform:uppercase;margin-bottom:2rem;
+}
+.hero-tag-dot{width:6px;height:6px;border-radius:50%;background:var(--o);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(52px,6.5vw,88px);
+  font-weight:700;line-height:0.95;
+  letter-spacing:-2px;margin-bottom:2rem;
+}
+h1 .line1{display:block}
+h1 .line2{display:block;color:var(--o);font-style:italic}
+h1 .line3{display:block;-webkit-text-stroke:1px rgba(255,255,255,0.3);color:transparent;font-style:italic}
+.hero-desc{
+  font-size:16px;line-height:1.8;color:var(--w2);
+  max-width:440px;margin-bottom:3rem;font-weight:300;
+}
+.hero-desc strong{color:var(--w);font-weight:500}
+.hero-btns{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:4rem}
+.btn-p{
+  background:linear-gradient(135deg,var(--o),var(--o2));
+  color:#fff;padding:15px 36px;border-radius:100px;
+  font-size:14px;font-weight:600;border:none;cursor:pointer;
+  transition:all .25s;text-decoration:none;display:inline-block;
+  box-shadow:0 6px 30px rgba(240,90,14,0.35);
+  letter-spacing:0.3px;
+}
+.btn-p:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(240,90,14,0.5)}
+.btn-s{
+  border:0.5px solid rgba(255,255,255,0.15);color:var(--w2);
+  padding:15px 36px;border-radius:100px;font-size:14px;
+  font-weight:500;cursor:pointer;transition:all .25s;
+  text-decoration:none;display:inline-block;background:transparent;
+}
+.btn-s:hover{border-color:var(--o);color:var(--o)}
+/* trust row */
+.trust-row{display:flex;gap:2rem;align-items:center;flex-wrap:wrap}
+.trust-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--w2)}
+.trust-icon{font-size:16px}
+.trust-div{width:1px;height:16px;background:var(--w3)}
+
+/* hero visual */
+.hero-visual{
+  position:absolute;right:0;top:0;bottom:0;width:48%;
+  display:flex;align-items:center;justify-content:center;
+  pointer-events:none;
+}
+.orbit-wrap{position:relative;width:520px;height:520px}
+.orbit{
+  position:absolute;border-radius:50%;
+  border:0.5px solid rgba(240,90,14,0.12);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+}
+.orbit-1{width:520px;height:520px;animation:spinO 40s linear infinite}
+.orbit-2{width:380px;height:380px;animation:spinO 25s linear infinite reverse}
+.orbit-3{width:240px;height:240px;animation:spinO 15s linear infinite}
+@keyframes spinO{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+.orbit-dot{
+  position:absolute;width:8px;height:8px;border-radius:50%;
+  background:var(--o);top:-4px;left:50%;transform:translateX(-50%);
+  box-shadow:0 0 12px var(--o);
+}
+.main-plate{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:220px;height:220px;border-radius:50%;
+  background:conic-gradient(from 0deg,#1c1200,#2e1e00,#1c1200,#261a00,#1c1200);
+  box-shadow:0 0 100px rgba(240,90,14,0.25),0 0 40px rgba(240,90,14,0.1),inset 0 0 60px rgba(0,0,0,0.6);
+  display:flex;align-items:center;justify-content:center;
+  font-size:90px;
+  animation:floatP 5s ease-in-out infinite;
+}
+.main-plate::after{
+  content:'';position:absolute;inset:14px;border-radius:50%;
+  border:1px solid rgba(240,90,14,0.25);
+}
+@keyframes floatP{0%,100%{transform:translate(-50%,-50%) translateY(0)}50%{transform:translate(-50%,-50%) translateY(-18px)}}
+/* floating tags on orbit */
+.float-tag{
+  position:absolute;background:var(--b3);
+  border:0.5px solid rgba(240,90,14,0.3);
+  border-radius:10px;padding:8px 14px;
+  font-size:12px;font-weight:600;color:var(--w);
+  white-space:nowrap;
+  box-shadow:0 4px 20px rgba(0,0,0,0.4);
+}
+.ft1{top:60px;right:60px}
+.ft2{bottom:100px;right:30px}
+.ft3{top:50%;left:-20px;transform:translateY(-50%)}
+
+/* MARQUEE */
+.marquee-wrap{
+  overflow:hidden;padding:1.5rem 0;
+  background:linear-gradient(90deg,var(--o),var(--o2),var(--o));
+  border-top:none;border-bottom:none;
+}
+.marquee-track{
+  display:flex;gap:3rem;width:max-content;
+  animation:marquee 20s linear infinite;
+}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.marquee-item{
+  display:flex;align-items:center;gap:10px;
+  font-size:13px;font-weight:600;color:#fff;
+  letter-spacing:1px;text-transform:uppercase;white-space:nowrap;
+}
+.marquee-sep{color:rgba(255,255,255,0.5);font-size:18px}
+
+/* SECTIONS */
+section{padding:7rem 5rem}
+.s-eye{
+  display:inline-flex;align-items:center;gap:10px;
+  color:var(--o);font-size:11px;font-weight:600;
+  letter-spacing:2.5px;text-transform:uppercase;margin-bottom:1.2rem;
+}
+.s-eye::before{content:'';width:24px;height:1px;background:var(--o)}
+h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(36px,4.5vw,58px);font-weight:700;
+  line-height:1.05;letter-spacing:-1.5px;margin-bottom:1rem;
+}
+.s-sub{font-size:15px;color:var(--w2);line-height:1.8;max-width:480px;font-weight:300}
+
+/* WHY */
+.why{background:var(--b2)}
+.why-inner{display:grid;grid-template-columns:1fr 1.5fr;gap:6rem;align-items:center}
+.why-cards{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.wc{
+  background:var(--b3);border:0.5px solid var(--b4);
+  border-radius:18px;padding:1.75rem;
+  transition:all .25s;position:relative;overflow:hidden;
+}
+.wc::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--o),transparent);
+  opacity:0;transition:opacity .25s;
+}
+.wc:hover{transform:translateY(-4px);border-color:rgba(240,90,14,0.3)}
+.wc:hover::before{opacity:1}
+.wc-icon{
+  width:44px;height:44px;border-radius:12px;
+  background:rgba(240,90,14,0.1);border:0.5px solid rgba(240,90,14,0.2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;margin-bottom:1.1rem;
+}
+.wc h3{font-size:15px;font-weight:600;margin-bottom:.5rem}
+.wc p{font-size:13px;color:var(--w2);line-height:1.7}
+
+/* PRODUCTS */
+.prod-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3rem;flex-wrap:wrap;gap:1rem}
+.prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.pc{
+  background:var(--b2);border:0.5px solid var(--b4);
+  border-radius:22px;overflow:hidden;transition:all .3s;cursor:pointer;
+}
+.pc:hover{transform:translateY(-8px);border-color:rgba(240,90,14,0.35);box-shadow:0 20px 60px rgba(0,0,0,0.5)}
+.pc-img{
+  height:220px;display:flex;align-items:center;justify-content:center;
+  font-size:90px;position:relative;
+}
+.pc-img.i1{background:radial-gradient(ellipse at center,#2a1900 0%,#0e0800 100%)}
+.pc-img.i2{background:radial-gradient(ellipse at center,#0a2200 0%,#040d00 100%)}
+.pc-img.i3{background:radial-gradient(ellipse at center,#200800 0%,#0d0300 100%)}
+.pc-tag{
+  position:absolute;top:14px;left:14px;
+  background:linear-gradient(135deg,var(--o),var(--o2));
+  color:#fff;font-size:10px;font-weight:700;
+  padding:4px 12px;border-radius:100px;letter-spacing:1px;text-transform:uppercase;
+}
+.pc-glow{
+  position:absolute;bottom:0;left:0;right:0;height:60px;
+  background:linear-gradient(to top,rgba(240,90,14,0.1),transparent);
+}
+.pc-body{padding:1.5rem}
+.pc-name{font-size:17px;font-weight:600;margin-bottom:.4rem}
+.pc-mat{
+  display:inline-block;font-size:11px;font-weight:600;
+  color:var(--o3);background:rgba(240,90,14,0.1);
+  padding:3px 10px;border-radius:100px;margin-bottom:.75rem;
+  letter-spacing:.5px;
+}
+.pc-desc{font-size:13px;color:var(--w2);line-height:1.7;margin-bottom:1.25rem}
+.pc-foot{display:flex;align-items:center;justify-content:space-between}
+.pc-price{font-size:22px;font-weight:700;color:var(--o);font-family:'Cormorant Garamond',serif}
+.pc-price sub{font-size:13px;color:var(--w2);font-family:'DM Sans',sans-serif;font-weight:400}
+.cart-btn{
+  background:rgba(240,90,14,0.12);border:0.5px solid rgba(240,90,14,0.35);
+  color:var(--o);padding:9px 20px;border-radius:100px;
+  font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;
+}
+.cart-btn:hover{background:var(--o);color:#fff;border-color:var(--o)}
+
+/* IMPACT */
+.impact{
+  background:var(--b2);
+  position:relative;overflow:hidden;
+}
+.impact::before{
+  content:'';position:absolute;
+  top:-200px;right:-200px;width:600px;height:600px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(240,90,14,0.08),transparent 70%);
+  pointer-events:none;
+}
+.impact-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:3.5rem}
+.imp-card{
+  text-align:center;padding:2.5rem 1.5rem;
+  background:var(--b3);border:0.5px solid var(--b4);
+  border-radius:20px;transition:all .25s;
+}
+.imp-card:hover{border-color:rgba(240,90,14,0.3);transform:translateY(-4px)}
+.imp-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:52px;font-weight:700;
+  background:linear-gradient(135deg,var(--o),var(--o3));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  line-height:1;margin-bottom:.5rem;
+}
+.imp-label{font-size:13px;color:var(--w2);line-height:1.5;margin-top:.25rem}
+
+/* PROCESS */
+.proc-steps{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--b4);
+  border:0.5px solid var(--b4);border-radius:20px;
+  overflow:hidden;margin-top:3.5rem;
+}
+.ps{
+  background:var(--b3);padding:2.5rem 2rem;
+  position:relative;transition:background .25s;
+}
+.ps:hover{background:var(--b2)}
+.ps-n{
+  font-family:'Cormorant Garamond',serif;
+  font-size:48px;font-weight:700;
+  color:rgba(240,90,14,0.15);
+  line-height:1;margin-bottom:1rem;
+}
+.ps-icon{font-size:28px;margin-bottom:1rem}
+.ps h3{font-size:15px;font-weight:600;margin-bottom:.6rem}
+.ps p{font-size:13px;color:var(--w2);line-height:1.7}
+.ps::after{
+  content:'→';position:absolute;right:-12px;top:50%;
+  transform:translateY(-50%);color:var(--o);font-size:18px;
+  z-index:1;
+}
+.ps:last-child::after{display:none}
+
+/* TESTIMONIALS */
+.testi{background:var(--b2)}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
+.tc{
+  background:var(--b3);border:0.5px solid var(--b4);
+  border-radius:18px;padding:2rem;transition:all .25s;
+  position:relative;overflow:hidden;
+}
+.tc::before{
+  content:'"';position:absolute;top:-10px;right:20px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:120px;color:rgba(240,90,14,0.07);
+  font-weight:700;line-height:1;pointer-events:none;
+}
+.tc:hover{border-color:rgba(240,90,14,0.3);transform:translateY(-4px)}
+.tc-stars{color:var(--o);font-size:13px;letter-spacing:3px;margin-bottom:1rem}
+.tc-text{font-size:14px;color:var(--w2);line-height:1.8;margin-bottom:1.5rem;font-style:italic;position:relative}
+.tc-auth{display:flex;align-items:center;gap:12px}
+.tc-av{
+  width:42px;height:42px;border-radius:50%;
+  background:linear-gradient(135deg,var(--o),var(--o2));
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;font-weight:700;color:#fff;flex-shrink:0;
+  font-family:'Cormorant Garamond',serif;
+}
+.tc-name{font-size:14px;font-weight:600}
+.tc-role{font-size:12px;color:var(--w2);margin-top:2px}
+
+/* CTA SECTION */
+.cta-sec{
+  margin:0 5rem 7rem;
+  background:linear-gradient(135deg,rgba(240,90,14,0.12),rgba(240,90,14,0.04));
+  border:0.5px solid rgba(240,90,14,0.2);
+  border-radius:28px;padding:5rem;
+  position:relative;overflow:hidden;
+  text-align:center;
+}
+.cta-sec::before{
+  content:'PARASLIS';
+  position:absolute;bottom:-30px;left:50%;transform:translateX(-50%);
+  font-family:'Cormorant Garamond',serif;
+  font-size:160px;font-weight:700;letter-spacing:20px;
+  color:rgba(240,90,14,0.04);white-space:nowrap;pointer-events:none;
+}
+.cta-sec h2{font-size:clamp(36px,4vw,56px);margin-bottom:1rem}
+.cta-sec p{font-size:16px;color:var(--w2);max-width:500px;margin:0 auto 2.5rem;line-height:1.7;font-weight:300}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+/* FOOTER */
+footer{
+  background:var(--b2);
+  border-top:0.5px solid var(--b4);
+  padding:4rem 5rem 2.5rem;
+}
+.footer-top{
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:4rem;margin-bottom:3rem;
+}
+.footer-brand .logo{font-size:28px}
+.footer-brand p{font-size:13px;color:var(--w2);line-height:1.7;margin-top:1rem;max-width:280px;font-weight:300}
+.footer-cert{
+  display:inline-flex;align-items:center;gap:6px;
+  margin-top:1.25rem;
+  background:rgba(240,90,14,0.1);border:0.5px solid rgba(240,90,14,0.2);
+  color:var(--o);padding:6px 14px;border-radius:100px;
+  font-size:11px;font-weight:600;letter-spacing:.5px;
+}
+.footer-col h4{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--w);margin-bottom:1.25rem}
+.footer-col a{
+  display:block;font-size:13px;color:var(--w2);
+  text-decoration:none;margin-bottom:.7rem;transition:color .2s;
+}
+.footer-col a:hover{color:var(--o)}
+.footer-bottom{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-top:2rem;border-top:0.5px solid var(--b4);
+  flex-wrap:wrap;gap:1rem;
+}
+.footer-bottom p{font-size:12px;color:var(--w2)}
+.social-links{display:flex;gap:12px}
+.sl{
+  width:34px;height:34px;border-radius:50%;
+  background:var(--b3);border:0.5px solid var(--b4);
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;cursor:pointer;transition:all .2s;text-decoration:none;
+}
+.sl:hover{border-color:var(--o);background:rgba(240,90,14,0.1)}
+
+@media(max-width:900px){
+  nav{padding:1rem 1.5rem}
+  .nav-links,.nav-badge{display:none}
+  .hero{padding:7rem 1.5rem 4rem}
+  .hero-visual{display:none}
+  section{padding:4rem 1.5rem}
+  .why-inner{grid-template-columns:1fr}
+  .why-cards{grid-template-columns:1fr}
+  .prod-grid,.testi-grid,.impact-grid{grid-template-columns:1fr}
+  .proc-steps{grid-template-columns:1fr 1fr}
+  .ps::after{display:none}
+  .cta-sec{margin:0 1.5rem 4rem;padding:3rem 1.5rem}
+  .footer-top{grid-template-columns:1fr 1fr}
+  footer{padding:3rem 1.5rem 2rem}
+}
+
+/* FULL-STACK UI */
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(10px);z-index:2000;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-backdrop.open{display:flex}
+.modal{width:min(720px,100%);max-height:90vh;overflow:auto;background:#111;border:1px solid #292929;border-radius:24px;box-shadow:0 30px 100px rgba(0,0,0,.7);padding:28px}
+.modal h3{font-family:'Cormorant Garamond',serif;font-size:34px;margin-bottom:8px}
+.modal-sub{color:var(--w2);font-size:13px;margin-bottom:20px;line-height:1.6}
+.modal-close{float:right;width:36px;height:36px;border-radius:50%;background:#222;color:#fff;border:1px solid #333;cursor:pointer}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-grid .full{grid-column:1/-1}
+.form-control{width:100%;background:#181818;color:#fff;border:1px solid #303030;border-radius:12px;padding:13px 14px;outline:none;font:inherit}
+.form-control:focus{border-color:var(--o)}
+textarea.form-control{min-height:110px;resize:vertical}
+.form-label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--w2);margin:0 0 6px 2px}
+.cart-list{display:flex;flex-direction:column;gap:10px;margin:15px 0}
+.cart-row{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;background:#181818;border:1px solid #292929;border-radius:14px;padding:12px}
+.cart-name{font-weight:600;font-size:14px}
+.cart-meta{font-size:11px;color:var(--w2);margin-top:3px}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{width:28px;height:28px;border-radius:50%;border:1px solid #444;background:#222;color:#fff;cursor:pointer}
+.cart-total{font-weight:700;color:var(--o);white-space:nowrap}
+.checkout-total{display:flex;justify-content:space-between;padding:15px 0;border-top:1px solid #292929;margin-top:10px;font-size:18px}
+.checkout-total strong{color:var(--o)}
+.radio-row{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+.radio-card{flex:1;min-width:150px;background:#181818;border:1px solid #303030;border-radius:12px;padding:12px;cursor:pointer}
+.radio-card input{margin-right:8px}
+.toast{position:fixed;right:22px;bottom:22px;z-index:3000;background:#181818;border:1px solid #333;border-left:3px solid var(--o);color:#fff;border-radius:12px;padding:14px 18px;max-width:360px;box-shadow:0 12px 40px rgba(0,0,0,.5);display:none}
+.toast.show{display:block;animation:toastIn .25s ease}
+@keyframes toastIn{from{transform:translateY(12px);opacity:0}to{transform:translateY(0);opacity:1}}
+.track-result{margin-top:16px;background:#181818;border:1px solid #303030;border-radius:14px;padding:15px;display:none}
+.status-pill{display:inline-block;padding:5px 10px;border-radius:100px;background:rgba(240,90,14,.12);color:var(--o3);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px}
+@media(max-width:650px){.form-grid{grid-template-columns:1fr}.form-grid .full{grid-column:auto}.modal{padding:20px}.cart-row{grid-template-columns:1fr auto}.cart-total{grid-column:2}}
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">PARASLIS<span>.</span><sub>Biodegradable Plates</sub></a>
+  <ul class="nav-links">
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#impact">Impact</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+  </ul>
+  <div class="nav-right">
+    <span class="nav-badge">🌿 Carbon Neutral</span>
+    <button class="nav-cta">Shop Now →</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-tag">
+      <span class="hero-tag-dot"></span>
+      Nature's Finest Tableware
+    </div>
+    <h1>
+      <span class="line1">Plates That</span>
+      <span class="line2">Feed the Earth</span>
+      <span class="line3">Not Landfills.</span>
+    </h1>
+    <p class="hero-desc">
+      <strong>Paraslis</strong> crafts premium biodegradable plates from areca palm, sugarcane bagasse, and bamboo — returning to nature in just <strong>60 days</strong>, leaving zero trace.
+    </p>
+    <div class="hero-btns">
+      <a href="#products" class="btn-p">Explore Collection</a>
+      <a href="#process" class="btn-s">Watch Process ↗</a>
+    </div>
+    <div class="trust-row">
+      <div class="trust-item"><span class="trust-icon">✅</span> FSSAI Certified</div>
+      <div class="trust-div"></div>
+      <div class="trust-item"><span class="trust-icon">🏆</span> ISO 9001:2015</div>
+      <div class="trust-div"></div>
+      <div class="trust-item"><span class="trust-icon">🌍</span> 2M+ Plates Delivered</div>
+      <div class="trust-div"></div>
+      <div class="trust-item"><span class="trust-icon">⭐</span> 4.9 / 5 Rating</div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="orbit-wrap">
+      <div class="orbit orbit-1"><div class="orbit-dot"></div></div>
+      <div class="orbit orbit-2"><div class="orbit-dot"></div></div>
+      <div class="orbit orbit-3"><div class="orbit-dot"></div></div>
+      <div class="main-plate">🍃</div>
+      <div class="float-tag ft1">🌿 100% Natural</div>
+      <div class="float-tag ft2">♻️ 60-Day Decompose</div>
+      <div class="float-tag ft3">💧 Waterproof</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="marquee-item"><span class="marquee-sep">✦</span> Areca Palm Plates</div>
+    <div class="marquee-item"><span class="marquee-sep">✦</span> Sugarcane Bagasse</div>
+    <div class="marquee-item"><span class="marquee-sep">✦</span> Bamboo Fibre</div>
+    <div class="marquee-item"><span class="marquee-sep">✦</span> Zero Plastic</div>
+    <div class="marquee-item"><span class="marquee-sep">✦</span> PARASLIS</div>
+    <div class="marquee-item"><span class="marquee-sep">✦</span> 60-Day Decompose</div>
+    <div class="marquee-item"><span class="marquee-sep">✦</span> FSSAI Certified</div>
+    <div class="marquee-item"><span class="marquee-sep">✦</span> Made in India</div>
+    <div class="marquee-item"><span class="marquee-sep">✦</span> Areca Palm Plates</div>
+    <div class="marquee-item"><span class="marquee-sep">✦</span> Sugarcane Bagasse</div>
+    <div class="marquee-item"><span class="marquee-sep">✦</span> Bamboo Fibre</div>
+    <div class="marquee-item"><span class="marquee-sep">✦</span> Zero Plastic</div>
+    <div class="marquee-item"><span class="marquee-sep">✦</span> PARASLIS</div>
+    <div class="marquee-item"><span class="marquee-sep">✦</span> 60-Day Decompose</div>
+    <div class="marquee-item"><span class="marquee-sep">✦</span> FSSAI Certified</div>
+    <div class="marquee-item"><span class="marquee-sep">✦</span> Made in India</div>
+  </div>
+</div>
+
+<!-- WHY -->
+<section class="why" id="why">
+  <div class="why-inner">
+    <div>
+      <div class="s-eye">Why Paraslis</div>
+      <h2>Better for you.<br>Better for Earth.</h2>
+      <p class="s-sub" style="margin-bottom:2rem">We didn't just replace plastic. We reimagined what a plate could be — beautiful, sturdy, and completely responsible.</p>
+      <a href="#products" class="btn-p">See Products →</a>
+    </div>
+    <div class="why-cards">
+      <div class="wc">
+        <div class="wc-icon">🌿</div>
+        <h3>100% Natural</h3>
+        <p>No chemicals, no plastic, no bleach. Just nature's finest materials.</p>
+      </div>
+      <div class="wc">
+        <div class="wc-icon">♻️</div>
+        <h3>60-Day Decompose</h3>
+        <p>Returns to earth completely in 60 days under composting conditions.</p>
+      </div>
+      <div class="wc">
+        <div class="wc-icon">💧</div>
+        <h3>Oil & Heat Safe</h3>
+        <p>Handles curries, hot food up to 120°C without bending or leaking.</p>
+      </div>
+      <div class="wc">
+        <div class="wc-icon">📦</div>
+        <h3>Bulk Ready</h3>
+        <p>Wholesale pricing for weddings, restaurants, events, and corporates.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="products">
+  <div class="prod-head">
+    <div>
+      <div class="s-eye">Collection</div>
+      <h2>Choose your plate.</h2>
+    </div>
+    <a href="#" class="btn-s">View All →</a>
+  </div>
+  <div class="prod-grid">
+    <div class="pc">
+      <div class="pc-img i1">
+        🍽️
+        <span class="pc-tag">Bestseller</span>
+        <div class="pc-glow"></div>
+      </div>
+      <div class="pc-body">
+        <div class="pc-name">Areca Palm Round Plate</div>
+        <span class="pc-mat">Areca Palm Leaf</span>
+        <p class="pc-desc">Classic round plate crafted from naturally shed areca palm leaves. Heat-resistant, chemical-free, and elegantly textured.</p>
+        <div class="pc-foot">
+          <div class="pc-price">₹8 <sub>/ plate</sub></div>
+          <button class="cart-btn">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+    <div class="pc">
+      <div class="pc-img i2">
+        🥗
+        <span class="pc-tag">Eco Pick</span>
+        <div class="pc-glow"></div>
+      </div>
+      <div class="pc-body">
+        <div class="pc-name">Sugarcane Bagasse Plate</div>
+        <span class="pc-mat">Sugarcane Fibre</span>
+        <p class="pc-desc">Made from sugarcane waste fibre. Microwave-safe, oil-resistant, smooth white finish. Perfect for everyday use.</p>
+        <div class="pc-foot">
+          <div class="pc-price">₹6 <sub>/ plate</sub></div>
+          <button class="cart-btn">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+    <div class="pc">
+      <div class="pc-img i3">
+        🎋
+        <span class="pc-tag">Premium</span>
+        <div class="pc-glow"></div>
+      </div>
+      <div class="pc-body">
+        <div class="pc-name">Bamboo Fibre Plate</div>
+        <span class="pc-mat">Bamboo Pulp</span>
+        <p class="pc-desc">Premium lightweight plates with a silky-smooth finish. Ideal for weddings, fine dining, and upscale events.</p>
+        <div class="pc-foot">
+          <div class="pc-price">₹12 <sub>/ plate</sub></div>
+          <button class="cart-btn">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT -->
+<section class="impact" id="impact">
+  <div style="text-align:center">
+    <div class="s-eye" style="justify-content:center">Our Impact</div>
+    <h2>Numbers that<br>matter to Earth.</h2>
+  </div>
+  <div class="impact-grid">
+    <div class="imp-card">
+      <div class="imp-num">2M+</div>
+      <div class="imp-label">Plates delivered across India</div>
+    </div>
+    <div class="imp-card">
+      <div class="imp-num">60</div>
+      <div class="imp-label">Days to fully decompose</div>
+    </div>
+    <div class="imp-card">
+      <div class="imp-num">12T</div>
+      <div class="imp-label">Tonnes of plastic avoided</div>
+    </div>
+    <div class="imp-card">
+      <div class="imp-num">10K+</div>
+      <div class="imp-label">Happy customers & businesses</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="s-eye">How It's Made</div>
+  <h2>From forest floor<br>to your table.</h2>
+  <div class="proc-steps">
+    <div class="ps">
+      <div class="ps-n">01</div>
+      <div class="ps-icon">🌿</div>
+      <h3>Collect</h3>
+      <p>Naturally fallen leaves and agricultural by-products collected from local farms. Zero deforestation.</p>
+    </div>
+    <div class="ps">
+      <div class="ps-n">02</div>
+      <div class="ps-icon">🧼</div>
+      <h3>Clean</h3>
+      <p>Raw material washed with hot water only. No bleach, no chemicals. Completely food-safe.</p>
+    </div>
+    <div class="ps">
+      <div class="ps-n">03</div>
+      <div class="ps-icon">🔥</div>
+      <h3>Press</h3>
+      <p>High-temperature heat pressing shapes and sterilises plates simultaneously — natural and strong.</p>
+    </div>
+    <div class="ps">
+      <div class="ps-n">04</div>
+      <div class="ps-icon">📦</div>
+      <h3>Deliver</h3>
+      <p>Packed in 100% recycled cardboard, shipped plastic-free to your doorstep across India.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi" id="reviews">
+  <div class="s-eye">Reviews</div>
+  <h2>10,000+ customers.<br>One mission.</h2>
+  <div class="testi-grid">
+    <div class="tc">
+      <div class="tc-stars">★★★★★</div>
+      <p class="tc-text">"Used Paraslis at our daughter's wedding — 600 guests, zero mess, zero guilt. The areca palm plates held biryani and dal makhani without any leakage. Absolutely stunning!"</p>
+      <div class="tc-auth">
+        <div class="tc-av">P</div>
+        <div>
+          <div class="tc-name">Priya Sharma</div>
+          <div class="tc-role">Event Organiser, Delhi</div>
+        </div>
+      </div>
+    </div>
+    <div class="tc">
+      <div class="tc-stars">★★★★★</div>
+      <p class="tc-text">"We switched our restaurant chain to Paraslis 8 months ago. Customers love the natural look. Quality is consistent, supply is reliable, and pricing beats everyone else."</p>
+      <div class="tc-auth">
+        <div class="tc-av">R</div>
+        <div>
+          <div class="tc-name">Rahul Mehta</div>
+          <div class="tc-role">Restaurant Owner, Mumbai</div>
+        </div>
+      </div>
+    </div>
+    <div class="tc">
+      <div class="tc-stars">★★★★★</div>
+      <p class="tc-text">"Finally a brand that walks the eco talk. Sturdy, beautiful, and my kids love knowing we're doing something good for the planet every single meal."</p>
+      <div class="tc-auth">
+        <div class="tc-av">A</div>
+        <div>
+          <div class="tc-name">Anjali Verma</div>
+          <div class="tc-role">Home User, Bangalore</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-sec">
+  <div class="s-eye" style="justify-content:center">Get Started</div>
+  <h2>Switch today.<br>Earth thanks you.</h2>
+  <p>Join 10,000+ homes, restaurants, and event planners who chose Paraslis over plastic. Bulk pricing available.</p>
+  <div class="cta-btns">
+    <button class="btn-p">Order Now</button>
+    <button class="btn-s">Get Bulk Quote →</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo">PARASLIS<span>.</span></div>
+      <p>Premium biodegradable plates crafted from nature's finest materials. Making sustainable dining beautiful, affordable, and accessible for every Indian home and business.</p>
+      <div class="footer-cert">🌿 Carbon Neutral Brand · Made in India</div>
+    </div>
+    <div class="footer-col">
+      <h4>Products</h4>
+      <a href="#">Areca Palm Plates</a>
+      <a href="#">Sugarcane Plates</a>
+      <a href="#">Bamboo Plates</a>
+      <a href="#">Bulk Orders</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#">About Paraslis</a>
+      <a href="#">Sustainability</a>
+      <a href="#">Certifications</a>
+      <a href="#">Blog</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="#">hello@paraslis.com</a>
+      <a href="#">+91 98765 43210</a>
+      <a href="#">WhatsApp Us</a>
+      <a href="#">Track Order</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Paraslis. All rights reserved. · Designed with 🧡 for the planet.</p>
+    <div class="social-links">
+      <a class="sl" href="#">📘</a>
+      <a class="sl" href="#">📸</a>
+      <a class="sl" href="#">🐦</a>
+      <a class="sl" href="#">▶️</a>
+    </div>
+  </div>
+</footer>
+
+
+<!-- CART / CHECKOUT / QUOTE / TRACKING UI -->
+<div class="modal-backdrop" id="cartModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('cartModal')">×</button>
+    <h3>Your Cart</h3>
+    <p class="modal-sub">Review your items and continue to checkout.</p>
+    <div id="cartList" class="cart-list"></div>
+    <div class="checkout-total"><span>Total</span><strong id="cartTotal">₹0</strong></div>
+    <button class="btn-p" style="width:100%;margin-top:15px" onclick="openCheckout()">Proceed to Checkout →</button>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="checkoutModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('checkoutModal')">×</button>
+    <h3>Checkout</h3>
+    <p class="modal-sub">Enter delivery details. Your order will be saved securely on the Paraslis backend.</p>
+    <form id="checkoutForm">
+      <div class="form-grid">
+        <div><label class="form-label">Name *</label><input class="form-control" name="name" required></div>
+        <div><label class="form-label">Phone *</label><input class="form-control" name="phone" required></div>
+        <div><label class="form-label">Email</label><input class="form-control" type="email" name="email"></div>
+        <div><label class="form-label">Pincode *</label><input class="form-control" name="pincode" required></div>
+        <div class="full"><label class="form-label">Address *</label><textarea class="form-control" name="address" required></textarea></div>
+        <div><label class="form-label">City *</label><input class="form-control" name="city" required></div>
+        <div><label class="form-label">State</label><input class="form-control" name="state" value="Rajasthan"></div>
+      </div>
+      <div class="form-label" style="margin-top:18px">Payment method</div>
+      <div class="radio-row">
+        <label class="radio-card"><input type="radio" name="paymentMethod" value="COD" checked> Cash on Delivery</label>
+        <label class="radio-card"><input type="radio" name="paymentMethod" value="UPI"> UPI / Manual</label>
+        <label class="radio-card" id="onlinePayOption" style="display:none"><input type="radio" name="paymentMethod" value="RAZORPAY"> Online Payment</label>
+      </div>
+      <div class="checkout-total"><span>Order total</span><strong id="checkoutTotal">₹0</strong></div>
+      <button class="btn-p" type="submit" style="width:100%;margin-top:15px">Place Order</button>
+    </form>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="quoteModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('quoteModal')">×</button>
+    <h3>Get a Bulk Quote</h3>
+    <p class="modal-sub">For weddings, restaurants, events and corporate orders.</p>
+    <form id="quoteForm">
+      <div class="form-grid">
+        <div><label class="form-label">Name *</label><input class="form-control" name="name" required></div>
+        <div><label class="form-label">Phone *</label><input class="form-control" name="phone" required></div>
+        <div><label class="form-label">Email</label><input class="form-control" type="email" name="email"></div>
+        <div><label class="form-label">Company / Event</label><input class="form-control" name="company"></div>
+        <div><label class="form-label">Approx. Quantity</label><input class="form-control" name="quantity" placeholder="e.g. 5000 plates"></div>
+        <div class="full"><label class="form-label">Requirement *</label><textarea class="form-control" name="requirement" required placeholder="Tell us plate type, delivery city, date, etc."></textarea></div>
+      </div>
+      <button class="btn-p" type="submit" style="width:100%;margin-top:15px">Request Quote →</button>
+    </form>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="trackModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('trackModal')">×</button>
+    <h3>Track Order</h3>
+    <p class="modal-sub">Enter the order ID you received after checkout.</p>
+    <form id="trackForm" style="display:flex;gap:10px">
+      <input class="form-control" name="id" placeholder="e.g. PL_xxx" required>
+      <button class="btn-p" type="submit">Track</button>
+    </form>
+    <div id="trackResult" class="track-result"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Paraslis Admin</title>
+<style>
+body{margin:0;background:#080808;color:#fff;font:14px Arial,sans-serif;padding:30px}
+.wrap{max-width:1100px;margin:auto}.card{background:#141414;border:1px solid #292929;border-radius:16px;padding:20px;margin-bottom:18px}
+input,select,button{padding:11px;border-radius:9px;border:1px solid #333;background:#1d1d1d;color:#fff}
+button{cursor:pointer;background:#f05a0e;border-color:#f05a0e}.row{display:flex;gap:10px;flex-wrap:wrap}.table{width:100%;border-collapse:collapse}.table th,.table td{padding:12px;border-bottom:1px solid #292929;text-align:left;vertical-align:top}.muted{color:#999;font-size:12px}
+</style></head><body><div class="wrap">
+<div class="card"><h1>Paraslis Admin</h1><p class="muted">Enter the ADMIN_KEY configured on the server.</p>
+<div class="row"><input id="key" type="password" placeholder="Admin key" style="min-width:280px"><button onclick="loadOrders()">Load Orders</button></div></div>
+<div class="card"><table class="table"><thead><tr><th>Order</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th></tr></thead><tbody id="rows"></tbody></table></div>
+</div>
+<script>
+let key='';
+const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+async function loadOrders(){
+ key=document.getElementById('key').value;
+ const r=await fetch('/api/admin/orders',{headers:{'x-admin-key':key}});
+ const d=await r.json(); if(!r.ok){alert(d.error||'Unauthorized');return;}
+ document.getElementById('rows').innerHTML=(d.orders||[]).map(o=>{
+   const customer=o.customer||{};
+   const items=o.items||[];
+   const status=o.status;
+   return `<tr><td><b>${esc(o.id)}</b><div class="muted">${esc(o.created_at||o.createdAt||'')}</div></td>
+   <td>${esc(customer.name)}<br>${esc(customer.phone)}<br>${esc(customer.city)}</td>
+   <td>${items.map(i=>esc(i.productId)+' × '+esc(i.quantity)).join('<br>')}</td>
+   <td>₹${Number(o.total||0).toLocaleString('en-IN')}</td>
+   <td><select onchange="setStatus('${esc(o.id)}',this.value)">
+     ${['received','confirmed','packed','shipped','delivered','cancelled'].map(s=>`<option ${s===status?'selected':''}>${s}</option>`).join('')}
+   </select></td></tr>`;
+ }).join('');
+}
+async function setStatus(id,status){
+ const r=await fetch('/api/admin/orders/'+encodeURIComponent(id),{method:'PATCH',headers:{'Content-Type':'application/json','x-admin-key':key},body:JSON.stringify({status})});
+ const d=await r.json(); if(!r.ok) alert(d.error||'Update failed');
+}
+</script></body></html>
