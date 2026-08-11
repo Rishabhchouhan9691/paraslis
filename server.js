@@ -99,7 +99,7 @@ app.use(helmet({contentSecurityPolicy:false}));
 app.use(cors({origin:process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',').map(x=>x.trim()) : true}));
 app.use(express.json({limit:'200kb'}));
 app.use(express.urlencoded({extended:true}));
-app.use(express.static(path.join(__dirname,'public')));
+app.use(express.static(__dirname));
 
 app.get('/api/health',(req,res)=>res.json({ok:true,service:'paraslis',storage:hasDb?'postgresql':'json',razorpayConfigured:Boolean(razorpay)}));
 app.get('/api/products',(req,res)=>res.json({products}));
@@ -221,8 +221,7 @@ app.patch('/api/admin/orders/:id/status',admin,async(req,res)=>{
   }catch(e){res.status(500).json({error:'Could not update order'})}
 });
 
-app.get(/.*/, (req,res)=>res.sendFile(path.join(__dirname,'public','index.html')));
-
+app.get(/.*/, (req,res)=>res.sendFile(path.join(__dirname,'index.html')));
 initDb()
   .then(()=>app.listen(PORT,()=>console.log(`Paraslis running on http://localhost:${PORT}`)))
   .catch(e=>{console.error('DB init failed',e);process.exit(1)});
